@@ -1,0 +1,15 @@
+[Unit]
+Description=First boot: grow root partition using growpart and resize filesystem
+DefaultDependencies=no
+After=systemd-remount-fs.service
+Before=local-fs.target
+
+ConditionPathExists=!/var/lib/growpart-firstboot.done
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/growpart-firstboot
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
